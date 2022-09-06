@@ -1,5 +1,4 @@
-# rtos_ga
-Repositório para trabalho do curso de  Sistemas Distribuídos e de Tempo Real  do GA - UNISINOS. 2022/02
+#Repositório para trabalho do curso de  Sistemas Distribuídos e de Tempo Real  do GA - UNISINOS. 2022/02
 
 Trabalho 2 - Entrega da lista 3 (pode ser em duplas ou em trios)
 
