@@ -73,9 +73,16 @@ int main()
  void* ta_function(void *arg)
  {
     //Inicialização da função de leitura de arquivo
-    FILE *pArq = NULL;
-    pArq = fopen("logS1.txt","a");
-    if(pArq == NULL) 
+    FILE *pArq1 = NULL;
+	FILE *pArq2 = NULL;
+    pArq1 = fopen("logS1.txt","a");
+	pArq2 = fopen("logS2.txt","a");
+    if(pArq1 == NULL) 
+    {
+        printf("Erro ao abrir arquivo.\n");
+        return 0;
+    }
+	if(pArq2 == NULL) 
     {
         printf("Erro ao abrir arquivo.\n");
         return 0;
@@ -87,24 +94,25 @@ int main()
     {
         printf("Temperatura de risco detectada  VS1[%d] = %.2f\n", i, vs1[i]);
         // Escreve a mensagem no arquivo
-        fprintf(pArq, "%s",  "Sensor1-> Temperatura maior que 2(");
-        fprintf(pArq, "%f) time: ",  vs1[i]);
+        fprintf(pArq1, "%s",  "Sensor1-> Temperatura maior que 2(");
+        fprintf(pArq1, "%f) time: ",  vs1[i]);
         //time(&t);
-        fprintf(pArq, "%s\n", ctime(&t));
+        fprintf(pArq1, "%s\n", ctime(&t));
     }
     
     if(vs2[i] > 2)
     {
-        printf("Temperatura de risco detectada VS2[%d] = %.2f\n", i, vs1[i]);
+        printf("Temperatura de risco detectada VS2[%d] = %.2f\n", i, vs2[i]);
         // Escreve a mensagem no arquivo
-        fprintf(pArq, "%s",  "Sensor2-> Temperatura maior que 2(");
-        fprintf(pArq, "%f) time: ",  vs2[i]);
+        fprintf(pArq2, "%s",  "Sensor2-> Temperatura maior que 2(");
+        fprintf(pArq2, "%f) time: ",  vs2[i]);
         //time(&t);
-        fprintf(pArq, "%s\n", ctime(&t));
+        fprintf(pArq2, "%s\n", ctime(&t));
     }
      
    } 
-   	fclose(pArq);
+   	fclose(pArq1);
+	fclose(pArq2);
  }
 
 
