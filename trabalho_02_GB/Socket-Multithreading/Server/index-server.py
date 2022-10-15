@@ -1,3 +1,4 @@
+#FONTE https://www.youtube.com/watch?v=QyJBrS1c1s8
 import threading
 import socket
 
