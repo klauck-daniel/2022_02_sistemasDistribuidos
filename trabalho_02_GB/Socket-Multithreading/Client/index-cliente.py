@@ -1,6 +1,7 @@
 import threading
 import socket
 
+tmpResponse = 0
 
 def main():
 
@@ -42,6 +43,24 @@ def sendMessages(client, username):
             client.send(f'<{username}> {msg}'.encode('utf-8'))
         except:
             return
+
+
+def tmpRequest():
+    # caso o temporizador tenha valor maior que 60s, solicitar leitura de temperatura
+    pass
+
+
+def tmpProcess():
+    if(tmpResponse < 30):
+        # request ao servidor para powerGreenLed
+        print(f'Led VERDE será LIGADO. Temperadura de {tmpResponse} ºC.')
+        
+    else:
+        # request ao servidor para powerRedLed
+        print(f'Led VERMELHO será LIGADO. Temperadura de {tmpResponse} ºC.')
+        pass
+
+
 
 
 main()
