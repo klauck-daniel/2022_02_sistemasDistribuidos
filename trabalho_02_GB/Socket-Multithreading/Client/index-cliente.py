@@ -60,7 +60,4 @@ def tmpProcess():
         print(f'Led VERMELHO será LIGADO. Temperadura de {tmpResponse} ºC.')
         pass
 
-
-
-
 main()

@@ -1,4 +1,5 @@
 #FONTE https://www.youtube.com/watch?v=QyJBrS1c1s8
+from random import randrange, uniform
 import threading
 import socket
 
@@ -58,7 +59,7 @@ def deleteClient(client):
 
 
 def tmpReader():
-    dhtTemperature = 21; #colocar funcção para gerar valores aleatórios dentro de um range
+    dhtTemperature = int(uniform(-10, 50)*10**2)/10**2
     return dhtTemperature()
 
 def powerLed(msg):
