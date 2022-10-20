@@ -8,6 +8,13 @@ clients = []
 redLed = 0
 greenLed = 0
 
+
+#Protocolo das mensagens
+#TMP_READ - Ler temperatura
+#TMP_XXXX - Temperatura Lida
+#LED_GREEN - Ligar led verde
+#LED_RED - Ligar led vermelho
+
 def main():
 
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

@@ -3,6 +3,12 @@ import socket
 
 tmpResponse = 0
 
+#Protocolo das mensagens
+#TMP_READ - Ler temperatura
+#TMP_XXXX - Temperatura Lida
+#LED_GREEN - Ligar led verde
+#LED_RED - Ligar led vermelho
+
 def main():
 
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -49,7 +55,6 @@ def tmpRequest():
     # caso o temporizador tenha valor maior que 60s, solicitar leitura de temperatura
     pass
 
-
 def tmpProcess():
     if(tmpResponse < 30):
         # request ao servidor para powerGreenLed
@@ -61,3 +66,4 @@ def tmpProcess():
         pass
 
 main()
+
