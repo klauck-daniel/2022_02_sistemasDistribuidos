@@ -20,6 +20,7 @@ def main():
 
     username = input('Usuário> ')
     print('\nConectado')
+    print('\nTMP_READ para ler a temperatura')
 
 
 # Criar duas threads para rodar as funções receiveMessages e sendMessage ao mesmo tempo

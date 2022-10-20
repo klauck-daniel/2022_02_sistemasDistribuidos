@@ -1,4 +1,4 @@
-#FONTE https://www.youtube.com/watch?v=QyJBrS1c1s8
+# FONTE https://www.youtube.com/watch?v=QyJBrS1c1s8
 from random import randrange, uniform
 import threading
 import socket
@@ -9,11 +9,11 @@ redLed = 0
 greenLed = 0
 
 
-#Protocolo das mensagens
-#TMP_READ - Ler temperatura
-#TMP_XXXX - Temperatura Lida
-#LED_GREEN - Ligar led verde
-#LED_RED - Ligar led vermelho
+# Protocolo das mensagens
+# TMP_READ - Ler temperatura
+# TMP_XXXX - Temperatura Lida
+# LED_GREEN - Ligar led verde
+# LED_RED - Ligar led vermelho
 
 def main():
 
@@ -38,9 +38,10 @@ def messagesTreatment(client):
         try:
             msg = client.recv(2048)
             broadcast(msg, client)
-            if(msg == 'tmpRead'):
+            if (msg == 'TMP_READ'):
+                print('Lendo temperatura...')
                 tmpReader()
-            elif(msg =='powerLed'):
+            elif (msg == 'LED_GREEN' or msg == 'LED_RED'):
                 powerLed(msg)
 
         except:
@@ -61,21 +62,23 @@ def deleteClient(client):
     clients.remove(client)
 
 
-#desenvolver método para separar deserializar os valores das mensagens que chegam
-#colocar alguns prints no servidor para ir logando as mensagens
+# desenvolver método para separar deserializar os valores das mensagens que chegam
+# colocar alguns prints no servidor para ir logando as mensagens
 
 
 def tmpReader():
     dhtTemperature = int(uniform(-10, 50)*10**2)/10**2
+    print(dhtTemperature)
     return dhtTemperature()
 
+
 def powerLed(msg):
-    if(msg == "powerGreenLed"):
-        if(redLed == 1):
+    if (msg == 'LED_GREEN'):
+        if (redLed == 1):
             redLed = 0
         greenLed = 1
-    elif(msg == "powerRedLed"):
-        if(greenLed == 1):
+    elif (msg == 'LED_RED'):
+        if (greenLed == 1):
             greenLed = 0
         redLed = 1
 
