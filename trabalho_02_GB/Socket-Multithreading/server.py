@@ -1,4 +1,11 @@
+# Protocolo das mensagens
+# TMP_READ - Ler temperatura
+# TMP_XXXX - Temperatura Lida
+# LED_GREEN - Ligar led verde
+# LED_RED - Ligar led vermelho
+
 from http import server
+from random import randrange, uniform
 import socket
 import threading
 
@@ -8,18 +15,20 @@ PORT = 5050
 SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
-DISCONNECT_MESSAGE = '!DICONNECT'
+DISCONNECT_MESSAGE = '!DISCONNECT'
+TMP_READ = 'TMP_READ'
+LED_GREEN = 'LED_GREEN'
+LED_RED = 'LED_RED'
 
 
 # Ligar um socket ao endereço IP e Porta
 # Mudar parametro  socket.SOCK_STREAM caso não queira fazer stream dos dados
+# Configurar o socket para ouvir e imprimir algumas coisas e esperar novas conexões
 #server = socket.socket(socket.FAMILIA, socket.TIPOM)
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # vincular o socket a um endereço
 server.bind(ADDR)
-
-# Configurar o socket para ouvir e imprimir algumas coisas e esperar novas conexões
 
 '''Esse método deve ser colocado em threads para que
 a linha que aguarda mensagens do cliente não bloquei
@@ -32,6 +41,8 @@ def handle_client(conn, addr):
     connected = True
     while connected:
 
+        STATUS_GREEN = 0
+        STATUS_RED = 0
         # informa o tamanho da mensagem que irá chegar
         msg_length = conn.recv(HEADER).decode(FORMAT)
         # caso a mensagem tenha algum conteúdo
@@ -40,15 +51,47 @@ def handle_client(conn, addr):
             msg_length = int(msg_length)
             # recebe a mensagem, ja com o tamanho definido
             msg = conn.recv(msg_length).decode(FORMAT)
+            # recebendo solicitação de temperatura e retorna ao client
+            if msg == TMP_READ:
+                conn.send(
+                    f'Temperatura: {tmp_measure():,.2f} °C'.encode(FORMAT))
+
+            elif msg == LED_GREEN or msg == LED_RED:
+                handle_led(msg, STATUS_GREEN, STATUS_RED)
+                #conn.send(f'Temperatura: {tmp_measure():,.2f} °C'.encode(FORMAT))
+
             # desconexão do usuário
-            if msg == DISCONNECT_MESSAGE:
+            elif msg == DISCONNECT_MESSAGE:
                 connected = False
 
             print(f'[{addr}] {msg}')
-            #para mandar mensagem de volta para o client
+            # para mandar mensagem de volta para o client
             conn.send('Msg received'.encode(FORMAT))
 
     conn.close()
+
+#Define o status dos LEDs
+def handle_led(msg, STATUS_GREEN, STATUS_RED):
+    
+    if msg == LED_GREEN:
+        STATUS_GREEN = 1
+        STATUS_RED = 0
+        print(f'[STATUS_GREEN] {STATUS_GREEN} e [STATUS_RED] {STATUS_RED}')
+    elif msg == LED_RED:
+        STATUS_GREEN = 0
+        STATUS_RED = 1
+        print(f'[STATUS_GREEN] {STATUS_GREEN} e [STATUS_RED] {STATUS_RED}')
+    else:
+        STATUS_GREEN = 0
+        STATUS_RED = 0
+        print(f'[STATUS_GREEN] {STATUS_GREEN} e [STATUS_RED] {STATUS_RED}')
+        
+
+
+
+# gera valor aleatório para retornar como temperatura
+def tmp_measure():
+    return (uniform(-10, 50)*10**2)/10**2
 
 
 def start():
@@ -61,7 +104,8 @@ def start():
         thread = threading.Thread(target=handle_client, args=(
             conn, addr))  # passa a nova conexão ao handle
         thread.start()
-        # exibe quantidade de conexoes a partir de threads ativas. Uma thread é usada para o prório serve, por isso o "-1"
+        # exibe quantidade de conexoes a partir de threads ativas.
+        # Uma thread é usada para o prório serve, por isso o "-1"
         print(f'[ACTIVE CONNECTIONS] {threading.active_count()-1}')
 
 

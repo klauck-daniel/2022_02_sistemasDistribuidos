@@ -1,10 +1,19 @@
+# Protocolo das mensagens
+# TMP_READ - Ler temperatura
+# TMP_XXXX - Temperatura Lida
+# LED_GREEN - Ligar led verde
+# LED_RED - Ligar led vermelho
+
 from http import client
 import socket
 
 HEADER = 64
 PORT = 5050
 FORMAT = 'utf-8'
-DISCONNECT_MESSAGE = '!DICONNECT'
+DISCONNECT_MESSAGE = '!DISCONNECT'
+TMP_READ = 'TMP_READ'
+LED_GREEN = 'LED_GREEN'
+LED_RED = 'LED_RED'
 # pega o endereço IP da máquina. Pode chumbar um valor no lugar da função
 SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
@@ -25,7 +34,9 @@ def send(msg):
     client.send(message)
     print(client.recv(2048).decode(FORMAT))
 
-#manda mensagem pro server
-send('Olá!')
-#desconecta do server
+
+# manda mensagem pro server
+send(LED_GREEN)
+
+# desconecta do server
 send(DISCONNECT_MESSAGE)
