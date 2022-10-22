@@ -22,11 +22,13 @@ def main():
     try:
         server.bind(('localhost', 7777))
         server.listen()
+        print('Aguardando conexão...')
     except:
         return print('\nNão foi possível iniciar o servidor!\n')
 
     while True:
         client, addr = server.accept()
+        print('Conectado em:', addr)
         clients.append(client)
 
         thread = threading.Thread(target=messagesTreatment, args=[client])
