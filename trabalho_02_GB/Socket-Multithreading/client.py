@@ -32,11 +32,25 @@ def send(msg):
     send_length += b' ' * (HEADER - len(send_length))
     client.send(send_length)
     client.send(message)
-    print(client.recv(2048).decode(FORMAT))
+    recvmsg = client.recv(2048).decode(FORMAT)
+    print(recvmsg) 
+    if msg == TMP_READ:
+        recsvmsgfloat = float(recvmsg[13:18])
+        print(recsvmsgfloat)
+        ledToTurnOn = LED_GREEN
+        if not recsvmsgfloat<30:
+            ledToTurnOn = LED_RED
+        send(ledToTurnOn)
+        print(f"{ledToTurnOn} será ligado")
+        
+
+
+    
+
 
 
 # manda mensagem pro server
 send(TMP_READ)
-
+input()
 # desconecta do server
 send(DISCONNECT_MESSAGE)
