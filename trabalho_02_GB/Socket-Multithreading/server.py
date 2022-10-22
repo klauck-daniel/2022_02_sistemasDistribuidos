@@ -51,14 +51,26 @@ def handle_client(conn, addr):
             msg_length = int(msg_length)
             # recebe a mensagem, ja com o tamanho definido
             msg = conn.recv(msg_length).decode(FORMAT)
+            
             # recebendo solicitação de temperatura e retorna ao client
             if msg == TMP_READ:
                 conn.send(
                     f'Temperatura: {tmp_measure():,.2f} °C'.encode(FORMAT))
 
+            # recebe solicitação para ligar ou desligar os leds
             elif msg == LED_GREEN or msg == LED_RED:
-                handle_led(msg, STATUS_GREEN, STATUS_RED)
-                #conn.send(f'Temperatura: {tmp_measure():,.2f} °C'.encode(FORMAT))
+                # chama função handle_led e guarda na tupla LED_STATUS
+                LED_STATUS = handle_led(msg, STATUS_GREEN, STATUS_RED)
+
+                # LED_STATUS[0] corresponde ao led VERDE
+                if LED_STATUS[0] == 1:
+                    conn.send(
+                        f'[LOG LED STATUS] VERDE = {LED_STATUS[0]}'.encode(FORMAT))
+
+                # LED_STATUS[1] corresponde ao led VERMELHO
+                elif LED_STATUS[1] == 1:
+                    conn.send(
+                        f'[LOG LED STATUS] VERMELHO = {LED_STATUS[1]}'.encode(FORMAT))
 
             # desconexão do usuário
             elif msg == DISCONNECT_MESSAGE:
@@ -70,9 +82,11 @@ def handle_client(conn, addr):
 
     conn.close()
 
-#Define o status dos LEDs
+# Define o status dos LEDs
+
+
 def handle_led(msg, STATUS_GREEN, STATUS_RED):
-    
+
     if msg == LED_GREEN:
         STATUS_GREEN = 1
         STATUS_RED = 0
@@ -85,8 +99,8 @@ def handle_led(msg, STATUS_GREEN, STATUS_RED):
         STATUS_GREEN = 0
         STATUS_RED = 0
         print(f'[STATUS_GREEN] {STATUS_GREEN} e [STATUS_RED] {STATUS_RED}')
-        
 
+    return (STATUS_GREEN, STATUS_RED)
 
 
 # gera valor aleatório para retornar como temperatura
