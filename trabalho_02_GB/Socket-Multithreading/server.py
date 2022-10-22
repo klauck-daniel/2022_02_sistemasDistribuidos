@@ -55,7 +55,7 @@ def handle_client(conn, addr):
             # recebendo solicitação de temperatura e retorna ao client
             if msg == TMP_READ:
                 conn.send(
-                    f'Temperatura: {tmp_measure():,.2f} °C'.encode(FORMAT))
+                    f'TMP_{tmp_measure():,.2f}'.encode(FORMAT))
 
             # recebe solicitação para ligar ou desligar os leds
             elif msg == LED_GREEN or msg == LED_RED:

@@ -36,7 +36,7 @@ def send(msg):
 
 
 # manda mensagem pro server
-send(LED_GREEN)
+send(TMP_READ)
 
 # desconecta do server
 send(DISCONNECT_MESSAGE)
