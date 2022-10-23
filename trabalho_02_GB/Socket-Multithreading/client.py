@@ -6,6 +6,7 @@
 
 from http import client
 import socket
+import time
 
 HEADER = 64
 PORT = 5050
@@ -20,7 +21,8 @@ ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # Efetiva a conexão com o servidor
-client.connect(ADDR)
+conection = client.connect(ADDR)
+client.getsockname
 
 
 # função para envio de mensagem
@@ -33,24 +35,26 @@ def send(msg):
     client.send(send_length)
     client.send(message)
     recvmsg = client.recv(2048).decode(FORMAT)
-    print(recvmsg) 
-    if msg == TMP_READ:
+    print(recvmsg)
+    if msg == TMP_READ and recvmsg[0:3]=='TMP' :
         recsvmsgfloat = float(recvmsg[4:9])
-        print(recsvmsgfloat)
         ledToTurnOn = LED_GREEN
         if not recsvmsgfloat<30:
             ledToTurnOn = LED_RED
         send(ledToTurnOn)
         print(f"{ledToTurnOn} será ligado")
-        
-
-
-    
-
-
+   
+              
+   
 
 # manda mensagem pro server
-send(TMP_READ)
-input()
-# desconecta do server
+processHealth = 1
+while processHealth == 1:
+    try:
+        send(TMP_READ)
+        time.sleep(60)
+    except:
+        print("Ocorreu uma falha na solicitação de temperatura")
+        processHealth=0      
+
 send(DISCONNECT_MESSAGE)
