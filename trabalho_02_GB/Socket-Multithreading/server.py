@@ -55,7 +55,7 @@ def handle_client(conn, addr):
             # recebendo solicitação de temperatura e retorna ao client
             if msg == TMP_READ:
                 conn.send(
-                    f'TMP_{tmp_measure():,.2f}'.encode(FORMAT))
+                    f'TMP_{tmp_measure():,.2f} \nMsg received by server'.encode(FORMAT))
 
             # recebe solicitação para ligar ou desligar os leds
             elif msg == LED_GREEN or msg == LED_RED:
@@ -65,12 +65,12 @@ def handle_client(conn, addr):
                 # LED_STATUS[0] corresponde ao led VERDE
                 if LED_STATUS[0] == 1:
                     conn.send(
-                        f'[LOG LED STATUS] VERDE = {LED_STATUS[0]} - [LOG LED STATUS] VERMELHO = {LED_STATUS[1]}'.encode(FORMAT))
+                        f'[LOG LED STATUS] GREEN = {LED_STATUS[0]} - [LOG LED STATUS] RED = {LED_STATUS[1]} \nMsg received by server'.encode(FORMAT))
 
                 # LED_STATUS[1] corresponde ao led VERMELHO
                 elif LED_STATUS[1] == 1:
                     conn.send(
-                        f'[LOG LED STATUS] VERMELHO = {LED_STATUS[1]} - [LOG LED STATUS] VERDE = {LED_STATUS[0]}'.encode(FORMAT))
+                        f'[LOG LED STATUS] RED = {LED_STATUS[1]} - [LOG LED STATUS] GREEN = {LED_STATUS[0]} \nMsg received by server'.encode(FORMAT))
 
             # desconexão do usuário
             elif msg == DISCONNECT_MESSAGE:

@@ -42,9 +42,7 @@ def send(msg):
         if not recsvmsgfloat<30:
             ledToTurnOn = LED_RED
         send(ledToTurnOn)
-        print(f"{ledToTurnOn} será ligado")
-   
-              
+        print(f"{ledToTurnOn} will be turned on")
    
 
 # manda mensagem pro server
@@ -54,7 +52,7 @@ while processHealth == 1:
         send(TMP_READ)
         time.sleep(60)
     except:
-        print("Ocorreu uma falha na solicitação de temperatura")
+        print("Temperature request failed")
         processHealth=0      
 
 send(DISCONNECT_MESSAGE)
