@@ -65,12 +65,12 @@ def handle_client(conn, addr):
                 # LED_STATUS[0] corresponde ao led VERDE
                 if LED_STATUS[0] == 1:
                     conn.send(
-                        f'[LOG LED STATUS] VERDE = {LED_STATUS[0]} [LOG LED STATUS] VERMELHO = {LED_STATUS[1]}'.encode(FORMAT))
+                        f'[LOG LED STATUS] VERDE = {LED_STATUS[0]} - [LOG LED STATUS] VERMELHO = {LED_STATUS[1]}'.encode(FORMAT))
 
                 # LED_STATUS[1] corresponde ao led VERMELHO
                 elif LED_STATUS[1] == 1:
                     conn.send(
-                        f'[LOG LED STATUS] VERMELHO = {LED_STATUS[1]} [LOG LED STATUS] VERDE = {LED_STATUS[0]}'.encode(FORMAT))
+                        f'[LOG LED STATUS] VERMELHO = {LED_STATUS[1]} - [LOG LED STATUS] VERDE = {LED_STATUS[0]}'.encode(FORMAT))
 
             # desconexão do usuário
             elif msg == DISCONNECT_MESSAGE:
@@ -78,7 +78,7 @@ def handle_client(conn, addr):
 
             print(f'[{addr}] {msg}')
             # para mandar mensagem de volta para o client
-            #conn.send(' \nMsg received by server\n'.encode(FORMAT))
+            #conn.send(' \nMsg received by server\n'.encode(FORMAT)) #ESTÁ CAUSANDO PROBLEMA QUANDO EXECUTADO VARIAS CONSULTAS EM SEQUENCIA
 
     conn.close()
 
