@@ -77,8 +77,6 @@ def handle_client(conn, addr):
                 connected = False
 
             print(f'[{addr}] {msg}')
-            # para mandar mensagem de volta para o client
-            #conn.send(' \nMsg received by server\n'.encode(FORMAT)) #ESTÁ CAUSANDO PROBLEMA QUANDO EXECUTADO VARIAS CONSULTAS EM SEQUENCIA
 
     conn.close()
 
