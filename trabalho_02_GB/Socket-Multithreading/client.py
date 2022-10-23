@@ -37,7 +37,7 @@ def send(msg):
     recvmsg = client.recv(2048).decode(FORMAT)
     print(recvmsg)
     if msg == TMP_READ and recvmsg[0:3]=='TMP' :
-        recsvmsgfloat = float(recvmsg[4:9])
+        recsvmsgfloat = float(recvmsg[4:10])
         ledToTurnOn = LED_GREEN
         if not recsvmsgfloat<30:
             ledToTurnOn = LED_RED
@@ -50,7 +50,7 @@ processHealth = 1
 while processHealth == 1:
     try:
         send(TMP_READ)
-        time.sleep(60)
+        time.sleep(3)
     except:
         print("Temperature request failed")
         processHealth=0      
