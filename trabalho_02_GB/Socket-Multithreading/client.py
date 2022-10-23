@@ -35,7 +35,7 @@ def send(msg):
     recvmsg = client.recv(2048).decode(FORMAT)
     print(recvmsg) 
     if msg == TMP_READ:
-        recsvmsgfloat = float(recvmsg[13:18])
+        recsvmsgfloat = float(recvmsg[4:9])
         print(recsvmsgfloat)
         ledToTurnOn = LED_GREEN
         if not recsvmsgfloat<30:

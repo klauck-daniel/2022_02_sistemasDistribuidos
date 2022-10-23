@@ -78,7 +78,7 @@ def handle_client(conn, addr):
 
             print(f'[{addr}] {msg}')
             # para mandar mensagem de volta para o client
-            conn.send('Msg received'.encode(FORMAT))
+            conn.send('\nMsg received'.encode(FORMAT))
 
     conn.close()
 
