@@ -24,8 +24,9 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 conection = client.connect(ADDR)
 client.getsockname
 
-
 # função para envio de mensagem
+
+
 def send(msg):
     message = msg.encode(FORMAT)
     # primeiro, devemos enviar o tamnho da mensagem
@@ -50,9 +51,10 @@ processHealth = 1
 while processHealth == 1:
     try:
         send(TMP_READ)
-        time.sleep(60)  # aguarda 60s para fazer nova requisição de temperatura
+        time.sleep(5)  # aguarda 60s para fazer nova requisição de temperatura
     except:
         print("Temperature request failed")
         processHealth = 0
+        send(DISCONNECT_MESSAGE)
 
 send(DISCONNECT_MESSAGE)

@@ -20,7 +20,6 @@ TMP_READ = 'TMP_READ'
 LED_GREEN = 'LED_GREEN'
 LED_RED = 'LED_RED'
 
-
 # Ligar um socket ao endereço IP e Porta
 # Mudar parametro  socket.SOCK_STREAM caso não queira fazer stream dos dados
 # Configurar o socket para ouvir e imprimir algumas coisas e esperar novas conexões
@@ -33,7 +32,6 @@ server.bind(ADDR)
 '''Esse método deve ser colocado em threads para que
 a linha que aguarda mensagens do cliente não bloquei
 novas conexões'''
-
 
 def handle_client(conn, addr):
     print(f'[NEW CONNECTION] {addr} connected')
@@ -81,8 +79,6 @@ def handle_client(conn, addr):
     conn.close()
 
 # Define o status dos LEDs
-
-
 def handle_led(msg, STATUS_GREEN, STATUS_RED):
 
     if msg == LED_GREEN:
@@ -105,7 +101,6 @@ def handle_led(msg, STATUS_GREEN, STATUS_RED):
 def tmp_measure():
     return (uniform(-10, 50)*10**2)/10**2
 
-
 def start():
     server.listen()
     print(f'[LISTENING] Server is listening on {SERVER}')
@@ -119,7 +114,6 @@ def start():
         # exibe quantidade de conexoes a partir de threads ativas.
         # Uma thread é usada para o prório serve, por isso o "-1"
         print(f'[ACTIVE CONNECTIONS] {threading.active_count()-1}')
-
 
 print('[STARTING] server is starting...')
 start()
