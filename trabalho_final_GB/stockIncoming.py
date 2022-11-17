@@ -1,0 +1,1 @@
+#Aplicativo que envia a mensagem MQTT quando alguma mercadoria ENTRA no estoque
