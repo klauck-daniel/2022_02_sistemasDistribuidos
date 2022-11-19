@@ -11,7 +11,7 @@ import keyboard
 # instancia o paho client
 mqttBroker = "mqtt.eclipseprojects.io"
 client = mqtt.Client("stockOutComming")#aqui pode inserir o clientName
-topic = "test/status"
+topic = "stock/out"
 msg = "Saída de produto do estoque detectada!"
 
 

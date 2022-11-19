@@ -8,9 +8,9 @@ import keyboard
 
 # instancia o paho client
 mqttBroker = "mqtt.eclipseprojects.io"
-client = mqtt.Client("stockInComming")#aqui pode inserir o clientName
-topic = "test/status"
-msg = "Entradae de produto do estoque detectada!"
+client = mqtt.Client("stockInComming")  # aqui pode inserir o clientName
+topic = "stock/in"
+msg = "Entrada de produto do estoque detectada!"
 
 
 # cria a conexão com o broker e verifica se a conexão deu certo
@@ -19,11 +19,11 @@ if client.connect(mqttBroker) != 0:
     sys.exit(-1)
 
 while True:
-    #ARGUMENTOS(tópico, mensagem de payload, nível de qualidade do serviço)
+    # ARGUMENTOS(tópico, mensagem de payload, nível de qualidade do serviço)
     if keyboard.read_key() == "e":
         client.publish(topic, msg, 0)
         print("Mensagem publicada -> Topico:" + topic + " Mensagem: " + msg)
         time.sleep(1)
 
-#desconecta do broekr
-#client.disconnect()
+# desconecta do broekr
+# client.disconnect()
