@@ -4,35 +4,37 @@
 
 # Aplicativo que Recebe a mensagem MQTT quando alguma mercadoria ENTRA ou SAI do estoque
 
-
 import paho.mqtt.client as mqtt
 import time
 
 # callback que trata a menssagem recebida
 
-
 def on_message(client, userdata, message):
     print("Received message: ", str(message.payload.decode("utf-8")))
     print("Tópico: " + str(message.topic))
 
-
 # instancia o paho client
 mqttBroker = "mqtt.eclipseprojects.io"
 topic = "stock/in"
-client = mqtt.Client("server")  # aqui pode inserir o clientName
 msg = "Default message."
 
+client = mqtt.Client("server")  # aqui pode inserir o clientName
+# callback das mensagens
+client.on_message = on_message
 # conecta o client ao broker
 client.connect(mqttBroker)
 
-# precisamos subescrever um client que está em loop, então precisamos de um loop
-client.loop_forever()
 # Subescre o tópico
 client.subscribe(topic)
-# callback das mensagens
-client.on_message = on_message
-time.sleep(30)
-client.loop_stop()
+
+try:
+    print("Pressione CTRL+C para sair.")
+    client.loop_forever()
+except:
+    print("Desconectando do broker.")
+
+client.disconnect()
+
 '''
 
 def stock_controll(client, userdata, message):
