@@ -10,7 +10,7 @@ import keyboard
 mqttBroker = "mqtt.eclipseprojects.io"
 client = mqtt.Client("stockInComming")#aqui pode inserir o clientName
 topic = "test/status"
-msg = "Default message."
+msg = "Entradae de produto do estoque detectada!"
 
 
 # cria a conexão com o broker e verifica se a conexão deu certo
