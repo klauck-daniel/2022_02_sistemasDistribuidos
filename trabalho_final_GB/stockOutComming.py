@@ -6,6 +6,7 @@ import paho.mqtt.client as mqtt
 import sys
 import socket
 import time
+import keyboard
 
 # instancia o paho client
 mqttBroker = "mqtt.eclipseprojects.io"
@@ -21,9 +22,10 @@ if client.connect(mqttBroker) != 0:
 
 while True:
     #ARGUMENTOS(tópico, mensagem de payload, nível de qualidade do serviço)
-    client.publish(topic, msg, 0)
-    print("Mensagem publicada -> Topico:" + topic + " Mensagem: " + msg)
-    time.sleep(1)
+    if keyboard.read_key() == "s":
+        client.publish(topic, msg, 0)
+        print("Mensagem publicada -> Topico:" + topic + " Mensagem: " + msg)
+        time.sleep(1)
 
 #desconecta do broekr
 #client.disconnect()
