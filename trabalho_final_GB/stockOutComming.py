@@ -19,19 +19,19 @@ if client.connect(mqttBroker) != 0:
 
 while True:
     # ARGUMENTOS(tópico, mensagem de payload, nível de qualidade do serviço)
-    if keyboard.read_key() == "u":
+    if keyboard.read_key() == "1":
         client.publish(topic, msg, 0)
         print("Message published -> Topic: " + topic + " Message: " + msg)
         client.publish(topic, "1", 0)
         print("Item packaging-> Unity.")
         time.sleep(1)
-    if keyboard.read_key() == "p":
+    if keyboard.read_key() == "2":
         client.publish(topic, msg, 0)
         print("Message published -> Topic: " + topic + " Message: " + msg)
         client.publish(topic, "2", 0)
         print("Item packaging-> Pack.")
         time.sleep(1)
-    if keyboard.read_key() == "b":
+    if keyboard.read_key() == "3":
         client.publish(topic, msg, 0)
         print("Message published -> Topic: " + topic + " Message: " + msg)
         client.publish(topic, "3", 0)
