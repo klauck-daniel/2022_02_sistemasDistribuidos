@@ -9,7 +9,7 @@ import time
 
 
 #controle de estoque
-stockTotal=0
+stockTotal=1000
 def stock_controll(client, userdata, message, MESSAGE):  
     global stockTotal
     # DO PYTHON 3.10 PRA CIMA, É POSSÍVEL USAR O MATCH/CASE PARA REALIZAR ESTA LÓGICA DE UMA FORMA MAIS LIMPA
@@ -33,7 +33,6 @@ def stock_controll(client, userdata, message, MESSAGE):
             print("No item packaging called" + MESSAGE + "!")
     if stockTotal>=0:
         print("Current total units in stock is "+ str(stockTotal))  
-        stockTotalGlobal=stockTotal
     else:
         print("Stock value cannot be less than zero.\nAn error occurred in the inventory count, check the actual quantity and update the system")  
 
@@ -44,7 +43,7 @@ def on_message(client, userdata, message):
     itemPackagingTypes= ["1","2","3"]
     embalagem = ""
     if (MESSAGE not in itemPackagingTypes):
-        print("Received message:", MESSAGE)
+        print("\nReceived message:", MESSAGE)
         print("Topic: " + str(message.topic))
     if (MESSAGE in itemPackagingTypes):
         if MESSAGE == "1": embalagem= "Unity"
