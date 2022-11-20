@@ -17,18 +17,18 @@ def stock_controll(client, userdata, message, MESSAGE):
         if MESSAGE == "1":
             stockTotal += 1
         elif MESSAGE == "2":
-            stockTotal = stockTotal + 12
+            stockTotal += 12
         elif MESSAGE == "3":
             stockTotal += 72
         else:
             print("No item packaging called " + MESSAGE + " !")
     elif message.topic == "stock/out":
         if MESSAGE == "1":
-            stockTotal = stockTotal - 1
+            stockTotal -= 1
         elif MESSAGE == "2":
-            stockTotal = stockTotal - 12
+            stockTotal -= 12
         elif MESSAGE == "3":
-            stockTotal = stockTotal - 72
+            stockTotal -= 72
         else:
             print("No item packaging called" + MESSAGE + "!")
     if stockTotal>=0:
@@ -44,7 +44,7 @@ def on_message(client, userdata, message):
     itemPackagingTypes= ["1","2","3"]
     embalagem = ""
     if (MESSAGE not in itemPackagingTypes):
-        print("Received message: ", MESSAGE)
+        print("Received message:", MESSAGE)
         print("Topic: " + str(message.topic))
     if (MESSAGE in itemPackagingTypes):
         if MESSAGE == "1": embalagem= "Unity"
