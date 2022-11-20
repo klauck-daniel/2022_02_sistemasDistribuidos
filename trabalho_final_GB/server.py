@@ -7,15 +7,56 @@
 import paho.mqtt.client as mqtt
 import time
 
+
+#controle de estoque
+stockTotal=0
+def stock_controll(client, userdata, message, MESSAGE):  
+    global stockTotal
+    # DO PYTHON 3.10 PRA CIMA, É POSSÍVEL USAR O MATCH/CASE PARA REALIZAR ESTA LÓGICA DE UMA FORMA MAIS LIMPA
+    if message.topic == "stock/in":
+        if MESSAGE == "1":
+            stockTotal += 1
+        elif MESSAGE == "2":
+            stockTotal = stockTotal + 12
+        elif MESSAGE == "3":
+            stockTotal += 72
+        else:
+            print("No item packaging called " + MESSAGE + " !")
+    elif message.topic == "stock/out":
+        if MESSAGE == "1":
+            stockTotal = stockTotal - 1
+        elif MESSAGE == "2":
+            stockTotal = stockTotal - 12
+        elif MESSAGE == "3":
+            stockTotal = stockTotal - 72
+        else:
+            print("No item packaging called" + MESSAGE + "!")
+    if stockTotal>=0:
+        print("Current total units in stock is "+ str(stockTotal))  
+        stockTotalGlobal=stockTotal
+    else:
+        print("Stock value cannot be less than zero.\nAn error occurred in the inventory count, check the actual quantity and update the system")  
+
 # callback que trata a menssagem recebida
 
 def on_message(client, userdata, message):
-    print("Received message: ", str(message.payload.decode("utf-8")))
-    print("Tópico: " + str(message.topic))
+    MESSAGE = str(message.payload.decode("utf-8"))
+    itemPackagingTypes= ["1","2","3"]
+    embalagem = ""
+    if (MESSAGE not in itemPackagingTypes):
+        print("Received message: ", MESSAGE)
+        print("Topic: " + str(message.topic))
+    if (MESSAGE in itemPackagingTypes):
+        if MESSAGE == "1": embalagem= "Unity"
+        elif MESSAGE == "2": embalagem= "Pack"
+        elif MESSAGE == "3": embalagem= "Box"
+        print("Item packaging:", embalagem)
+        stock_controll(client, userdata, message, MESSAGE)
+
 
 # instancia o paho client
 mqttBroker = "mqtt.eclipseprojects.io"
-topic = "stock/in"
+topic = [("stock/in",0),("stock/out",0)]
 msg = "Default message."
 
 client = mqtt.Client("server")  # aqui pode inserir o clientName
@@ -28,36 +69,12 @@ client.connect(mqttBroker)
 client.subscribe(topic)
 
 try:
-    print("Pressione CTRL+C para sair.")
+    print("Press CTRL+C to exit")
     client.loop_forever()
+
 except:
-    print("Desconectando do broker.")
+    print("Disconnecting do broker.")
 
 client.disconnect()
 
-'''
 
-def stock_controll(client, userdata, message):
-
-    ITENS = []
-    MESSAGE = str(message.payload.decode("utf-8"))
-
-    # DO PYTHON 3.10 PRA CIMA, É POSSÍVEL USAR O MATCH/CASE PARA REALIZAR ESTA LÓGICA DE UMA FORMA MAIS LIMPA
-    if messagem.topic == "StockIn":
-        if MESSAGE == 1:
-            ITENS[1] = ITENS[1] + 1
-        elif MESSAGE == 2:
-            ITENS[2] = ITENS[2] + 1
-        elif MESSAGE == 3:
-            ITENS[3] = ITENS[3] + 1
-        else:
-            print("No item called" + MESSAGE + "!")
-    elif messagem.topic == "StockOut":
-        if MESSAGE == 1:
-            ITENS[1] = ITENS[1] - 1
-        elif MESSAGE == 2:
-            ITENS[2] = ITENS[2] - 1
-        elif MESSAGE == 3:
-            ITENS[3] = ITENS[3] - 1
-        else:
-            print("No item called" + MESSAGE + "!")'''
