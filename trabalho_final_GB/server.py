@@ -37,7 +37,6 @@ def stock_controll(client, userdata, message, MESSAGE):
         print("Stock value cannot be less than zero.\nAn error occurred in the inventory count, check the actual quantity and update the system")  
 
 # callback que trata a menssagem recebida
-
 def on_message(client, userdata, message):
     MESSAGE = str(message.payload.decode("utf-8"))
     itemPackagingTypes= ["1","2","3"]
@@ -51,7 +50,6 @@ def on_message(client, userdata, message):
         elif MESSAGE == "3": embalagem= "Box"
         print("Item packaging:", embalagem)
         stock_controll(client, userdata, message, MESSAGE)
-
 
 # instancia o paho client
 mqttBroker = "mqtt.eclipseprojects.io"
@@ -70,7 +68,6 @@ client.subscribe(topic)
 try:
     print("Press CTRL+C to exit")
     client.loop_forever()
-
 except:
     print("Disconnecting do broker.")
 
